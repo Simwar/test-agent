@@ -1,0 +1,23 @@
+{
+  "name": "release-note-helper",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "An agent that helps you craft release notes from Jira issues and GitHub PRs",
+  "scripts": {
+    "dev": "bun --watch agent/index.ts",
+    "start": "bun agent/index.ts"
+  },
+  "main": "./agent/index.ts",
+  "dependencies": {
+    "@mastra/core": "latest",
+    "@mastra/memory": "latest",
+    "@mastra/libsql": "latest",
+    "@astropods/adapter-mastra": "latest",
+    "ioredis": "^5.4.1",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.1.14",
+    "typescript": "^5.9.3"
+  }
+}

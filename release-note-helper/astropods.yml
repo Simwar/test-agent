@@ -1,0 +1,40 @@
+spec: package/v1
+name: release-note-helper
+
+meta:
+  description: An agent that helps you craft release notes from Jira issues and GitHub PRs
+
+inputs:
+  JIRA_BASE_URL:
+    name: JIRA_BASE_URL
+    datatype: string
+    description: Jira Cloud base URL (e.g. https://yourcompany.atlassian.net)
+  JIRA_EMAIL:
+    name: JIRA_EMAIL
+    datatype: string
+    description: Atlassian account email for Jira API authentication
+  JIRA_API_TOKEN:
+    name: JIRA_API_TOKEN
+    datatype: string
+    secret: true
+    description: Atlassian API token for Jira API authentication
+
+agent:
+  build:
+    context: .
+    dockerfile: Dockerfile
+
+models:
+  anthropic:
+    provider: anthropic
+
+integrations:
+  github:
+    provider: github
+
+knowledge:
+  preferences:
+    provider: redis
+
+dev:
+  interfaces: [web, slack]
