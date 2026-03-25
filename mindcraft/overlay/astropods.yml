@@ -1,0 +1,52 @@
+spec: astro/v1
+name: mindcraft
+
+meta:
+  description: AI-powered Minecraft battle-royale bot for Astro Arena
+
+agent:
+  build:
+    context: .
+    dockerfile: Dockerfile
+
+inputs:
+  ANTHROPIC_API_KEY:
+    name: ANTHROPIC_API_KEY
+    datatype: string
+    description: Anthropic API key for Claude
+    secret: true
+  MINECRAFT_HOST:
+    name: MINECRAFT_HOST
+    datatype: string
+    description: Minecraft server host (use host.docker.internal to reach localhost from inside Docker)
+    default: "srv.minecraft.astropod.ai"
+  MINECRAFT_PORT:
+    name: MINECRAFT_PORT
+    datatype: string
+    description: Minecraft server port
+    default: "25565"
+  ARENA_CONTROLLER_URL:
+    name: ARENA_CONTROLLER_URL
+    datatype: string
+    description: Arena Controller base URL — bot registers here on startup
+    default: "https://ctl.minecraft.astropod.ai"
+  BOT_NAME:
+    name: BOT_NAME
+    datatype: string
+    description: Bot name shown in-game — must be unique per bot
+  BOT_STRATEGY:
+    name: BOT_STRATEGY
+    datatype: string
+    display-as: long-text
+    description: "Free-text strategy injected into the bot's system prompt. Describe how the bot should play (e.g. 'Rush enemies immediately, never retreat.' or 'Loot first, engage only when fully armed.'). Leave empty for the balanced default."
+  BOT_MODEL:
+    name: BOT_MODEL
+    datatype: string
+    description: "Claude model to use (e.g. claude-haiku-4-5-20251001 for fast/cheap, claude-sonnet-4-6 for balanced, claude-opus-4-6 for strongest)"
+    default: "claude-sonnet-4-6"
+
+# ast dev runs inside Docker.
+# host.docker.internal reaches the host machine, where the k8s NodePort and
+# Arena Controller are both listening.
+dev:
+  command: "sh ./start.sh"
